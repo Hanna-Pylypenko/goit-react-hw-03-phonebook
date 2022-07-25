@@ -14,6 +14,16 @@ export class App extends Component {
     ],
     filter: '',
   };
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    this.setState({ contacts: parsedContacts });
+  }
   onFilterHandler = evt => {
     this.setState({ filter: evt.currentTarget.value });
   };
